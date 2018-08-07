@@ -37,6 +37,7 @@ before_install:
 - yes | sdkmanager "platforms;android-27"
 
 install:
+- bundle install
 
 before_script:
 - bundle exec danger
