@@ -1,0 +1,9 @@
+rules:
+    default:
+        protection:
+          required_status_checks:
+            contexts:
+              - continuous-integration/travis-ci
+              - codecov/project
+              - Detekt
+          required_pull_request_reviews: null
