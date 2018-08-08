@@ -58,6 +58,7 @@ script:
 #- echo "Time after emulator has started  $now"
 - ./gradlew build jacocoFullReport
 - bundle exec danger
+- bash .upload_jacoco_files.sh
 
 after_script:
 - bash <(curl -s https://codecov.io/bash)
