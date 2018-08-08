@@ -5,7 +5,7 @@ setup_git() {
 
 commit_website_files() {
   git checkout -b gh-pages
-  mkdir ./reports/jacoco/${TRAVIS_BUILD_NUMBER}
+  mkdir -p ./reports/jacoco/${TRAVIS_BUILD_NUMBER}
   cp -R ./build/reports/jacoco/jacocoFullReport ./reports/jacoco/${TRAVIS_BUILD_NUMBER}
   git add -- reports/jacoco/${TRAVIS_BUILD_NUMBER}
   git commit --message "jacoco report, Travis build: ${TRAVIS_BUILD_NUMBER}"
