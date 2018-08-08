@@ -39,9 +39,6 @@ before_install:
 install:
 - bundle install
 
-before_script:
-- bundle exec danger
-
 script:
 - echo "************************ Add google-services.json ************************"
 - echo "$google_services_json" > presentation/google-services.json
@@ -60,6 +57,7 @@ script:
 #- now=$(date +"%T")
 #- echo "Time after emulator has started  $now"
 - ./gradlew build jacocoTestReport
+- bundle exec danger
 
 after_script:
 - bash <(curl -s https://codecov.io/bash)
