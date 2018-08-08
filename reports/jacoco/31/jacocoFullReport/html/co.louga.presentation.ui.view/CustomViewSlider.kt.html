@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomViewSlider.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emptyapp2</a> &gt; <a href="index.source.html" class="el_package">co.louga.presentation.ui.view</a> &gt; <span class="el_source">CustomViewSlider.kt</span></div><h1>CustomViewSlider.kt</h1><pre class="source lang-java linenums">package co.louga.presentation.ui.view
+
+import android.content.Context
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener
+import android.util.AttributeSet
+import android.view.View
+import android.widget.LinearLayout
+import co.louga.presentation.R
+import co.louga.presentation.model.WordViewModel
+import co.louga.presentation.ui.words.IWordsAdapter
+
+import kotlinx.android.synthetic.main.custom_view_slider_layout.view.sliderContainer
+import kotlinx.android.synthetic.main.custom_view_slider_layout.view.sliderCounterText
+
+class CustomViewSlider
+@JvmOverloads
+<span class="fc" id="L17">constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0)</span>
+<span class="fc" id="L18">  : LinearLayout(context, attrs, defStyleAttr) {</span>
+
+  init {
+<span class="fc" id="L21">    View.inflate(context, R.layout.custom_view_slider_layout, this)</span>
+<span class="fc" id="L22">    orientation = VERTICAL</span>
+<span class="fc" id="L23">    sliderContainer.addOnPageChangeListener(object : SimpleOnPageChangeListener() {</span>
+      override fun onPageSelected(position: Int) {
+<span class="nc bnc" id="L25" title="All 2 branches missed.">        setSliderCounterPosition(position, sliderContainer.getItemsCount()!!)</span>
+<span class="nc" id="L26">      }</span>
+    })
+  }
+
+  fun setAdapter(adapter: IWordsAdapter) {
+<span class="fc" id="L31">    sliderContainer.setAdapter(adapter)</span>
+<span class="fc" id="L32">  }</span>
+
+  fun setData(wordList: Collection&lt;WordViewModel&gt;) {
+<span class="fc" id="L35">    sliderContainer.setData(wordList)</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">    setSliderCounterPosition(sliderContainer.getCurrentItem(), sliderContainer.getItemsCount()!!)</span>
+<span class="fc" id="L37">  }</span>
+
+  fun addOnPageChangeListener(onPageChangeListenerAdapter: SimpleOnPageChangeListener) {
+<span class="nc" id="L40">    sliderContainer.addOnPageChangeListener(onPageChangeListenerAdapter)</span>
+<span class="nc" id="L41">  }</span>
+
+  fun setSliderCounterPosition(position: Int, total: Int) {
+<span class="fc" id="L44">    sliderCounterText.text = context.getString(R.string.view_pager_indicator_text,</span>
+<span class="fc" id="L45">        position + 1, total)</span>
+<span class="fc" id="L46">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
