@@ -6,4 +6,5 @@ rules:
               - continuous-integration/travis-ci
               - codecov/project
               - Detekt
+              - danger/danger
           required_pull_request_reviews: null

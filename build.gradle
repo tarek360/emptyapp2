@@ -14,6 +14,7 @@ buildscript {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath 'com.google.gms:google-services:4.0.1' // google-services plugin
     classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
+    classpath 'com.palantir:jacoco-coverage:0.4.0'
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -77,3 +78,5 @@ ext.libraries = [javax_annotation            : "javax.annotation:jsr250-api:1.0"
                  espresso_core               : 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 ]
+
+apply plugin: 'com.palantir.jacoco-full-report'
