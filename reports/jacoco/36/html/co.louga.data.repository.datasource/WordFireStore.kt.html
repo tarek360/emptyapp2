@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WordFireStore.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emptyapp2</a> &gt; <a href="index.source.html" class="el_package">co.louga.data.repository.datasource</a> &gt; <span class="el_source">WordFireStore.kt</span></div><h1>WordFireStore.kt</h1><pre class="source lang-java linenums">package co.louga.data.repository.datasource
+
+import android.util.Log
+//import com.google.firebase.firestore.FirebaseFirestore
+import co.louga.data.entity.WordEntity
+import co.louga.data.net.WordResponse
+import io.reactivex.Observable
+import java.util.ArrayList
+
+
+/**
+ * [WordDataStore] implementation based on connections to the api (Cloud).
+ */
+<span class="nc" id="L14">internal class WordFireStore : WordDataStore {</span>
+
+  companion object {
+    const val TAG = &quot;WordFireStore&quot;
+  }
+
+  override fun fetchWords(query: String): Observable&lt;WordResponse&gt; {
+//    val doc = FirebaseFirestore.getInstance().collection(&quot;words&quot;)
+//
+//    Log.d(&quot;firestore&quot;, &quot;documents[0] =&gt; &quot; + doc.get().result.documents[0].data)
+//
+//    doc.get().addOnCompleteListener { task -&gt;
+//      if (task.isSuccessful) {
+//        for (document in task.result) {
+//          Log.d(TAG, document.id + &quot; =&gt; &quot; + document.data)
+//        }
+//      } else {
+//        Log.d(TAG, &quot;Error getting documents: &quot;, task.exception)
+//      }
+//    }
+
+
+<span class="nc" id="L36">    val words = ArrayList&lt;WordEntity&gt;()</span>
+<span class="nc" id="L37">    words.add(WordEntity(1, &quot;a&quot;, &quot;b&quot;, &quot;&quot;))</span>
+<span class="nc" id="L38">    return Observable.just(WordResponse(words))</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
