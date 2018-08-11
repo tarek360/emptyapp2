@@ -1,8 +1,8 @@
 apply plugin: 'jacoco'
 
-jacoco {
-  toolVersion = "$jacocoVersion"
-}
+//jacoco {
+//  toolVersion = "$jacocoVersion"
+//}
 
 tasks.withType(Test) {
   testLogging {
