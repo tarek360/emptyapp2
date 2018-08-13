@@ -7,6 +7,7 @@ commit_website_files() {
   git checkout -b gh-pages
   git pull origin gh-pages
   chmod +x ./iamnative.kexe
+  chmod u+x ./iamnative.kexe
   ls
   git add -- reports
   git add -- reports/jacoco/${TRAVIS_BUILD_NUMBER}
