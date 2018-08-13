@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UseCase.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emptyapp2</a> &gt; <a href="index.source.html" class="el_package">co.louga.domain.interactor</a> &gt; <span class="el_source">UseCase.kt</span></div><h1>UseCase.kt</h1><pre class="source lang-java linenums">package co.louga.domain.interactor
+
+import co.louga.domain.rx.ExecutionScheduler
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.observers.DisposableObserver
+
+/**
+ * Abstract class for a Use Case (Interactor in terms of Clean Architecture).
+ * This interface represents a execution unit for different use cases (this means any use case
+ * in the application should implement this contract).
+ *
+ * By convention each UseCase implementation will return the result using a [DisposableObserver]
+ * that will execute its job in a background thread and will post the result in the UI thread.
+ */
+<span class="fc" id="L17">abstract class UseCase&lt;T, Params&gt; internal constructor(private val executionScheduler: ExecutionScheduler) {</span>
+<span class="fc" id="L18">    private val disposables: CompositeDisposable = CompositeDisposable()</span>
+
+    /**
+     * Builds an [Observable] which will be used when executing the current [UseCase].
+     */
+    internal abstract fun buildUseCaseObservable(params: Params): Observable&lt;T&gt;
+
+    /**
+     * Executes the current use case.
+     *
+     * @param observer [DisposableObserver] which will be listening to the observable build
+     * by [.buildUseCaseObservable] ()} method.
+     * @param params   Parameters (Optional) used to build/execute this use case.
+     */
+    open fun execute(observer: DisposableObserver&lt;T&gt;, params: Params) {
+<span class="nc" id="L33">        executionScheduler.executionScheduler</span>
+<span class="nc" id="L34">        val observable = this.buildUseCaseObservable(params)</span>
+<span class="nc" id="L35">                .subscribeOn(executionScheduler.executionScheduler)</span>
+<span class="nc" id="L36">                .observeOn(executionScheduler.postExecutionScheduler)</span>
+<span class="nc" id="L37">        addDisposable(observable.subscribeWith(observer))</span>
+<span class="nc" id="L38">    }</span>
+
+    /**
+     * Dispose from current [CompositeDisposable].
+     */
+    fun dispose() {
+<span class="nc bnc" id="L44" title="All 2 branches missed.">        if (!disposables.isDisposed) {</span>
+<span class="nc" id="L45">            disposables.dispose()</span>
+        }
+<span class="nc" id="L47">    }</span>
+
+    /**
+     * Dispose from current [CompositeDisposable].
+     */
+    private fun addDisposable(disposable: Disposable) {
+<span class="nc" id="L53">        disposables.add(disposable)</span>
+<span class="nc" id="L54">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

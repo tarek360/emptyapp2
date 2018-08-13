@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SliderTransformer.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emptyapp2</a> &gt; <a href="index.source.html" class="el_package">co.louga.presentation.ui.slider</a> &gt; <span class="el_source">SliderTransformer.kt</span></div><h1>SliderTransformer.kt</h1><pre class="source lang-java linenums">package co.louga.presentation.ui.slider
+
+import android.support.v4.view.ViewPager
+import android.view.View
+
+<span class="fc" id="L6">class SliderTransformer : ViewPager.PageTransformer {</span>
+
+  override fun transformPage(view: View, position: Float) {
+    when {
+<span class="pc bpc" id="L10" title="1 of 2 branches missed.">      position &lt; -1 -&gt; {</span>
+<span class="nc" id="L11">        view.alpha = INACTIVE_ALPHA</span>
+<span class="nc" id="L12">        view.scaleX = INACTIVE_SCALE</span>
+<span class="nc" id="L13">        view.scaleY = INACTIVE_SCALE</span>
+      }
+<span class="pc bpc" id="L15" title="1 of 2 branches missed.">      position &lt;= 1 -&gt; {</span>
+<span class="fc" id="L16">        val scale = INACTIVE_SCALE + (1 - INACTIVE_SCALE) * (1 - Math.abs(position))</span>
+<span class="fc" id="L17">        val alpha = INACTIVE_ALPHA + (1 - INACTIVE_ALPHA) * (1 - Math.abs(position))</span>
+<span class="fc" id="L18">        view.scaleX = scale</span>
+<span class="fc" id="L19">        view.scaleY = scale</span>
+<span class="fc" id="L20">        view.alpha = alpha</span>
+      }
+      else -&gt; {
+<span class="nc" id="L23">        view.alpha = INACTIVE_ALPHA</span>
+<span class="nc" id="L24">        view.scaleX = INACTIVE_SCALE</span>
+<span class="nc" id="L25">        view.scaleY = INACTIVE_SCALE</span>
+      }
+    }
+<span class="fc" id="L28">  }</span>
+
+  companion object {
+    private const val INACTIVE_SCALE = 0.9f
+    private const val INACTIVE_ALPHA = 0.7f
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
