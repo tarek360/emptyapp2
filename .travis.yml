@@ -33,6 +33,14 @@ cache:
   - "$HOME/.android/build-cache"
 
 before_install:
+- git diff $TRAVIS_PULL_REQUEST_SHA $TRAVIS_COMMIT
+- echo $TRAVIS_PULL_REQUEST_SHA
+- echo $TRAVIS_BUILD_ID
+- echo $TRAVIS_BUILD_NUMBER
+- echo $TRAVIS_COMMIT
+- echo $TRAVIS_PULL_REQUEST_SHA
+- CURRENT_SHA=$(git rev-parse HEAD)
+- echo $CURRENT_SHA
 - ./anas.kexe
 - ls
 - echo y | android update sdk --no-ui --all --filter sys-img-armeabi-v7a-android-27,sys-img-x86_64-android-27,build-tools-27.0.3
