@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SliderContainer.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emptyapp2</a> &gt; <a href="index.source.html" class="el_package">co.louga.presentation.ui.view</a> &gt; <span class="el_source">SliderContainer.kt</span></div><h1>SliderContainer.kt</h1><pre class="source lang-java linenums">package co.louga.presentation.ui.view
+
+import android.content.Context
+import android.graphics.Point
+import android.os.Build
+import android.os.Build.VERSION_CODES
+import android.support.v4.view.ViewPager
+import android.support.v4.view.ViewPager.SimpleOnPageChangeListener
+import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import co.louga.presentation.model.WordViewModel
+import co.louga.presentation.ui.slider.SliderTransformer
+import co.louga.presentation.ui.words.IWordsAdapter
+import co.louga.presentation.ui.words.WordsAdapter
+
+class SliderContainer
+<span class="fc" id="L20">@JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)</span>
+<span class="fc" id="L21">  : FrameLayout(context, attrs), ViewPager.OnPageChangeListener {</span>
+
+  private var adapter: WordsAdapter? = null
+  private var needsRedraw: Boolean = false
+  private var slider: Slider
+<span class="fc" id="L26">  private val center = Point()</span>
+<span class="fc" id="L27">  private val initialTouch = Point()</span>
+
+  init {
+<span class="fc" id="L30">    clipChildren = false</span>
+<span class="fc" id="L31">    clipToPadding = false</span>
+
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">    if (Build.VERSION.SDK_INT &lt; VERSION_CODES.LOLLIPOP) {</span>
+<span class="nc" id="L34">      setLayerType(View.LAYER_TYPE_SOFTWARE, null)</span>
+    }
+
+<span class="fc" id="L37">    slider = Slider(context)</span>
+
+<span class="fc" id="L39">    val layoutParams = FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,</span>
+<span class="fc" id="L40">        ViewGroup.LayoutParams.WRAP_CONTENT)</span>
+<span class="fc" id="L41">    this.addView(slider, 0, layoutParams)</span>
+<span class="fc" id="L42">    slider.setPageTransformer(false, SliderTransformer())</span>
+  }
+
+  fun setAdapter(adapter: IWordsAdapter) {
+<span class="fc" id="L46">    this.adapter = adapter as WordsAdapter</span>
+<span class="fc" id="L47">  }</span>
+
+  fun setData(wordList: Collection&lt;WordViewModel&gt;) {
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">    this.adapter?.setData(wordList)</span>
+<span class="fc" id="L51">    slider.adapter = adapter</span>
+<span class="fc" id="L52">  }</span>
+
+<span class="fc" id="L54">  fun getCurrentItem() = slider.currentItem</span>
+
+<span class="pc bpc" id="L56" title="1 of 2 branches missed.">  fun getItemsCount() = adapter?.count</span>
+
+  override fun onFinishInflate() {
+<span class="fc" id="L59">    super.onFinishInflate()</span>
+<span class="pc bpc" id="L60" title="1 of 2 branches missed.">    slider = getChildAt(0) as Slider</span>
+<span class="fc" id="L61">    slider.addOnPageChangeListener(this)</span>
+<span class="fc" id="L62">    slider.setPageTransformer(false, SliderTransformer())</span>
+<span class="fc" id="L63">  }</span>
+
+  override fun onTouchEvent(ev: MotionEvent): Boolean {
+    // Capture any touches not already handled by the ViewPager
+    // to implement scrolling from a touch outside the pager bounds.
+<span class="nc bnc" id="L68" title="All 3 branches missed.">    when (ev.action) {</span>
+      MotionEvent.ACTION_DOWN -&gt; {
+<span class="nc" id="L70">        initialTouch.x = ev.x.toInt()</span>
+<span class="nc" id="L71">        initialTouch.y = ev.y.toInt()</span>
+<span class="nc" id="L72">        this.performClick()</span>
+<span class="nc" id="L73">        ev.offsetLocation((center.x - initialTouch.x).toFloat(),</span>
+<span class="nc" id="L74">            (center.y - initialTouch.y).toFloat())</span>
+      }
+      MotionEvent.ACTION_UP -&gt; {
+<span class="nc" id="L77">        this.performClick()</span>
+<span class="nc" id="L78">        ev.offsetLocation((center.x - initialTouch.x).toFloat(),</span>
+<span class="nc" id="L79">            (center.y - initialTouch.y).toFloat())</span>
+      }
+<span class="nc" id="L81">      else -&gt; ev.offsetLocation((center.x - initialTouch.x).toFloat(),</span>
+<span class="nc" id="L82">          (center.y - initialTouch.y).toFloat())</span>
+    }
+<span class="nc" id="L84">    return slider.dispatchTouchEvent(ev)</span>
+  }
+
+  override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">    if (needsRedraw) invalidate()</span>
+<span class="fc" id="L89">  }</span>
+
+  override fun onPageSelected(position: Int) {
+
+<span class="nc" id="L93">  }</span>
+
+  override fun onPageScrollStateChanged(state: Int) {
+<span class="nc bnc" id="L96" title="All 2 branches missed.">    needsRedraw = state != ViewPager.SCROLL_STATE_IDLE</span>
+<span class="nc" id="L97">  }</span>
+
+  fun addOnPageChangeListener(onPageChangeListener: SimpleOnPageChangeListener) {
+<span class="fc" id="L100">    slider.addOnPageChangeListener(onPageChangeListener)</span>
+<span class="fc" id="L101">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

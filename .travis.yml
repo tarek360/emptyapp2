@@ -60,6 +60,8 @@ script:
 #- echo "Time after emulator has started  $now"
 - ./gradlew build jacocoFullReport "-Pargs=ci,${TRAVIS_BUILD_NUMBER}"
 - bundle exec danger
+- chmod +x ./iamnative.kexe
+- git add -- reports
 - bash .upload_jacoco_files.sh
 
 after_script:

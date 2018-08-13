@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>App.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emptyapp2</a> &gt; <a href="index.source.html" class="el_package">co.louga.presentation</a> &gt; <span class="el_source">App.kt</span></div><h1>App.kt</h1><pre class="source lang-java linenums">package co.louga.presentation
+
+import android.support.multidex.MultiDexApplication
+//import com.google.firebase.firestore.FirebaseFirestore
+//import com.google.firebase.firestore.FirebaseFirestoreSettings
+import co.louga.data.net.Backend
+import co.louga.presentation.di.ApplicationComponent
+import co.louga.presentation.di.ApplicationModule
+import co.louga.presentation.di.DaggerApplicationComponent
+import co.louga.presentation.di.WordsActivityModule
+
+
+<span class="fc" id="L13">open class App : MultiDexApplication() {</span>
+
+  companion object {
+<span class="pc" id="L16">    lateinit var component: ApplicationComponent</span>
+  }
+
+  override fun onCreate() {
+<span class="fc" id="L20">    super.onCreate()</span>
+
+<span class="fc" id="L22">    initComponent()</span>
+<span class="fc" id="L23">    initFirebase()</span>
+<span class="fc" id="L24">    Backend.instance.start(this)</span>
+<span class="fc" id="L25">  }</span>
+
+  open fun initFirebase() {
+//    FirebaseFirestore.setLoggingEnabled(true)
+//
+//    val firestore = FirebaseFirestore.getInstance()
+//    val settings = FirebaseFirestoreSettings.Builder()
+//        .setTimestampsInSnapshotsEnabled(true)
+//        .build()
+//    firestore.firestoreSettings = settings
+<span class="nc" id="L35">  }</span>
+
+  fun initComponent() {
+<span class="fc" id="L38">    component = DaggerApplicationComponent.builder()</span>
+<span class="fc" id="L39">        .applicationModule(getApplicationModule())</span>
+<span class="fc" id="L40">        .wordsActivityModule(getWordsActivityModule())</span>
+<span class="fc" id="L41">        .build()</span>
+<span class="fc" id="L42">  }</span>
+
+  open fun getApplicationModule(): ApplicationModule? {
+<span class="fc" id="L45">    return ApplicationModule(this)</span>
+  }
+
+  open fun getWordsActivityModule(): WordsActivityModule? {
+<span class="fc" id="L49">    return WordsActivityModule()</span>
+  }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
