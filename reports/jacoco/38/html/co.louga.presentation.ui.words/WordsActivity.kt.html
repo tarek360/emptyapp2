@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WordsActivity.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emptyapp2</a> &gt; <a href="index.source.html" class="el_package">co.louga.presentation.ui.words</a> &gt; <span class="el_source">WordsActivity.kt</span></div><h1>WordsActivity.kt</h1><pre class="source lang-java linenums">package co.louga.presentation.ui.words
+
+import android.content.Context
+import android.content.Intent
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
+//import com.google.firebase.firestore.FirebaseFirestore
+import co.louga.presentation.App
+import co.louga.presentation.R
+import co.louga.presentation.model.WordViewModel
+import kotlinx.android.synthetic.main.activity_words.customViewSlider
+import kotlinx.android.synthetic.main.activity_words.errorTextView
+import javax.inject.Inject
+
+<span class="fc" id="L16">class WordsActivity : AppCompatActivity(), WordsContract.View {</span>
+
+  companion object {
+    fun buildIntent(baseContext: Context?, query: String): Intent? {
+
+<span class="fc" id="L21">      val intent = Intent(baseContext, WordsActivity::class.java)</span>
+<span class="fc" id="L22">      intent.putExtra(KEY_CATEGORY, query)</span>
+<span class="fc" id="L23">      return intent</span>
+    }
+
+    const val KEY_CATEGORY = &quot;category&quot;
+  }
+
+  @Inject
+<span class="pc bpc" id="L30" title="1 of 2 branches missed.">  lateinit var adapter: IWordsAdapter</span>
+
+  @Inject
+<span class="nc bnc" id="L33" title="All 2 branches missed.">  lateinit var presenter: WordsContract.Presenter</span>
+
+  override fun onCreate(savedInstanceState: Bundle?) {
+<span class="fc" id="L36">    App.component.inject(this)</span>
+<span class="fc" id="L37">    super.onCreate(savedInstanceState)</span>
+<span class="fc" id="L38">    setContentView(R.layout.activity_words)</span>
+
+<span class="pc bpc" id="L40" title="1 of 2 branches missed.">    customViewSlider.setAdapter(adapter)</span>
+
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">    presenter.attachView(this)</span>
+
+<span class="fc" id="L44">    loadData()</span>
+<span class="fc" id="L45">  }</span>
+
+  override fun setData(data: Collection&lt;WordViewModel&gt;) {
+<span class="fc" id="L48">    customViewSlider.setData(data)</span>
+<span class="fc" id="L49">  }</span>
+
+//  private fun loadFirebaseData() {
+//    val doc = FirebaseFirestore.getInstance().collection(&quot;words&quot;)
+//        .orderBy(&quot;&quot;).limit(1)
+//
+//    Log.d(&quot;firestore&quot;, &quot;documents[0] =&gt; &quot; + doc.get().result.documents[0].data)
+//
+//    doc.get().addOnSuccessListener { task -&gt;
+//      if (!task.isEmpty) {
+//        for (document in task.documents) {
+//          Log.d(&quot;firestore&quot;, document.id + &quot; =&gt; &quot; + document.data)
+//        }
+//      }
+//    }
+//    doc.get().addOnCompleteListener { task -&gt;
+//      if (task.isSuccessful) {
+//        for (document in task.result) {
+//          Log.d(&quot;firestore&quot;, document.id + &quot; =&gt; &quot; + document.data)
+//        }
+//      } else {
+//        Log.d(&quot;firestore&quot;, &quot;Error getting documents: &quot;, task.exception)
+//      }
+//    }
+//  }
+
+  private fun loadData() {
+<span class="pc bpc" id="L76" title="2 of 4 branches missed.">    presenter.loadWords(intent.getStringExtra(KEY_CATEGORY) ?: &quot;&quot;)</span>
+<span class="fc" id="L77">  }</span>
+
+<span class="nc bnc" id="L79" title="All 2 branches missed.">  override fun getData(): Collection&lt;WordViewModel&gt; = adapter.getData()</span>
+
+
+  override fun showContent() {
+
+<span class="nc" id="L84">  }</span>
+
+  override fun showError(msg: String) {
+<span class="nc" id="L87">    errorTextView.text = msg</span>
+<span class="nc" id="L88">  }</span>
+
+  override fun onDestroy() {
+<span class="fc" id="L91">    super.onDestroy()</span>
+<span class="pc bpc" id="L92" title="1 of 2 branches missed.">    presenter.detachView()</span>
+<span class="fc" id="L93">  }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.1.201803210924</span></div></body></html>
