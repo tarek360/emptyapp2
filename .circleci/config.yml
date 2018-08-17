@@ -22,6 +22,26 @@ jobs:
           command: yes | sdkmanager --licenses || true
 
       - run:
+          name: bundle_install
+          command: bundle install
+
+      - run:
+          name: Add google-services.json
+          command: echo "$google_services_json" > presentation/google-services.json
+
+      - run:
+          name: Run_jacocoFullReport
+          command: ./gradlew build jacocoFullReport "-Pargs=ci,${CIRCLE_BUILD_NUM}"
+
+      - run:
+          name: Run_danger
+          command: bundle exec danger
+
+      - run:
+          name: Upload jacoco report
+          command: bash .upload_jacoco_files.sh
+
+      - run:
           name: run anas1
           command: ./anas.kexe
 
