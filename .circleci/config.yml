@@ -22,6 +22,18 @@ jobs:
           command: yes | sdkmanager --licenses || true
 
       - run:
+          name: Print CIRCLE_COMPARE_URL
+          command: echo $CIRCLE_COMPARE_URL
+
+      - run:
+          name: Print CURRENT_SHA
+          command: git rev-parse HEAD
+
+      - run:
+          name: Print CIRCLE_SHA1
+          command: echo $CIRCLE_SHA1
+
+      - run:
           name: bundle_install
           command: bundle install
 
