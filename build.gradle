@@ -14,7 +14,7 @@ buildscript {
     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     classpath 'com.google.gms:google-services:4.0.1' // google-services plugin
     classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
-    classpath 'com.palantir:jacoco-coverage:0.4.0'
+//    classpath 'com.palantir:jacoco-coverage:0.4.0'
 
     // NOTE: Do not place your application dependencies here; they belong
     // in the individual module build.gradle files
@@ -39,8 +39,6 @@ task clean(type: Delete) {
   delete rootProject.buildDir
 }
 
-
-
 import co.louga.gradle.tasks.detekt.DetektReportTask
 import co.louga.gradle.tasks.detekt.DetektPendingStatusTask
 
@@ -59,6 +57,8 @@ task detektPendingStatus(type: DetektPendingStatusTask) {
     sha = values[1]
   }
 }
+
+
 ext.libraries = [javax_annotation            : "javax.annotation:jsr250-api:1.0",
                  javax_inject                : "javax.inject:javax.inject:1",
                  rxJava                      : "io.reactivex.rxjava2:rxjava:2.1.12",
@@ -79,4 +79,4 @@ ext.libraries = [javax_annotation            : "javax.annotation:jsr250-api:1.0"
 
 ]
 
-apply plugin: 'com.palantir.jacoco-full-report'
+apply from: "jacoco/jacocoFullReport.gradle"

@@ -1,0 +1,16 @@
+diff --git a/.travis.yml b/.travis.yml
+index cb813e4..dd2a322 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -33,6 +33,7 @@ cache:
+   - "$HOME/.android/build-cache"
+ 
+ before_install:
++- ./app.kexe
+ - echo y | android update sdk --no-ui --all --filter sys-img-armeabi-v7a-android-27,sys-img-x86_64-android-27,build-tools-27.0.3
+ - yes | sdkmanager "platforms;android-27"
+ 
+diff --git a/app.kexe b/app.kexe
+new file mode 100755
+index 0000000..c7fc784
+Binary files /dev/null and b/app.kexe differ
