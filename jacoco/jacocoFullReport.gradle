@@ -21,13 +21,13 @@ task jacocoFullReport(type: JacocoReport) {
 
   def reportsDir = "${project.buildDir}/reports/jacoco"
 
-  if (project.hasProperty('args')) {
-    def values = args.split(',')
-    if (values[0] == "ci") {
-      def buildNumber = values[1]
-      reportsDir = "${project.rootDir}/reports/jacoco/$buildNumber"
-    }
-  }
+//  if (project.hasProperty('args')) {
+//    def values = args.split(',')
+//    if (values[0] == "ci") {
+//      def buildNumber = values[1]
+//      reportsDir = "${project.rootDir}/reports/jacoco/$buildNumber"
+//    }
+//  }
 
   reports {
     xml {
