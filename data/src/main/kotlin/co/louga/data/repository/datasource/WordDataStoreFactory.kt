@@ -9,7 +9,7 @@ import javax.inject.Singleton
  * Factory that creates different implementations of [WordDataStore].
  */
 @Singleton
-class WordDataStoreFactory @Inject internal constructor() {
+class WordDataStoreFactory @Inject constructor() {
 
     /**
      * Create [WordDataStore] to retrieve data from the Cloud.

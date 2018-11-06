@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class WordDataRepository
-@Inject internal constructor(private val wordDataStoreFactory: WordDataStoreFactory,
+@Inject constructor(private val wordDataStoreFactory: WordDataStoreFactory,
     private val wordEntityDataMapper: WordEntityDataMapper) : WordsRepository {
 
   override fun getWords(query: String): Observable<Collection<Word>> {

@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
-@Config(application = TestRobolectricApplication::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
+//@Config(application = TestRobolectricApplication::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
 @RunWith(RobolectricTestRunner::class)
 open class RobolectricBase {
 

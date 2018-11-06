@@ -6,7 +6,6 @@ import co.louga.domain.rx.ExecutionScheduler
 import io.reactivex.Observable
 import javax.inject.Inject
 
-
 open class WordsRequestUseCase
 @Inject constructor(
         private val wordsRepository: WordsRepository,

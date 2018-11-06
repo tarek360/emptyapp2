@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-open class WordViewModelDataMapper @Inject internal constructor() : Mapper<Word, WordViewModel>() {
+open class WordViewModelDataMapper @Inject constructor() : Mapper<Word, WordViewModel>() {
 
   override fun map(src: Word): WordViewModel = WordViewModel(
       src.id,

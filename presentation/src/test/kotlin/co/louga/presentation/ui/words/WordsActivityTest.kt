@@ -3,8 +3,8 @@ package co.louga.presentation.ui.words
 import android.os.Build
 import android.widget.ProgressBar
 import co.louga.presentation.R
-import co.louga.presentation.TestRobolectricApplication
-import co.louga.presentation.di.MockWordsActivityModule
+//import co.louga.presentation.TestRobolectricApplication
+//import co.louga.presentation.di.MockWordsActivityModule
 import co.louga.presentation.model.WordViewModel
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
@@ -22,7 +22,7 @@ import org.robolectric.RuntimeEnvironment
 import org.robolectric.android.controller.ActivityController
 import org.robolectric.annotation.Config
 
-@Config(application = TestRobolectricApplication::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
+//@Config(application = TestRobolectricApplication::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
 @RunWith(RobolectricTestRunner::class)
 class WordsActivityTest {
 
@@ -36,8 +36,8 @@ class WordsActivityTest {
   fun setUp() {
     MockitoAnnotations.initMocks(this)
 
-    val app = RuntimeEnvironment.application as TestRobolectricApplication
-    app.setWordsActivityModule(MockWordsActivityModule(presenter))
+//    val app = RuntimeEnvironment.application as TestRobolectricApplication
+//    app.setWordsActivityModule(MockWordsActivityModule(presenter))
 
     val intent = WordsActivity.buildIntent(RuntimeEnvironment.application.applicationContext, "test")
 

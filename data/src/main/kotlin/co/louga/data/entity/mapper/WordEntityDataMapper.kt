@@ -10,7 +10,7 @@ import javax.inject.Singleton
  * domain layer.
  */
 @Singleton
-class WordEntityDataMapper @Inject internal constructor() : Mapper<WordEntity, Word>() {
+class WordEntityDataMapper @Inject constructor() : Mapper<WordEntity, Word>() {
 
   override fun map(src: WordEntity): Word = Word(
       src.id,
