@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>WordsRequestUseCase.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">emptyapp2</a> &gt; <a href="index.source.html" class="el_package">co.louga.domain.interactor</a> &gt; <span class="el_source">WordsRequestUseCase.kt</span></div><h1>WordsRequestUseCase.kt</h1><pre class="source lang-java linenums">package co.louga.domain.interactor
+
+import co.louga.domain.model.Word
+import co.louga.domain.repository.WordsRepository
+import co.louga.domain.rx.ExecutionScheduler
+import io.reactivex.Observable
+import javax.inject.Inject
+
+
+open class WordsRequestUseCase
+<span class="fc" id="L11">@Inject constructor(</span>
+        private val wordsRepository: WordsRepository,
+        executionScheduler: ExecutionScheduler)
+<span class="fc" id="L14">    : UseCase&lt;Collection&lt;Word&gt;, WordsRequestUseCase.Params&gt;(executionScheduler) {</span>
+
+    override fun buildUseCaseObservable(params: WordsRequestUseCase.Params): Observable&lt;Collection&lt;Word&gt;&gt; {
+<span class="nc" id="L17">        return wordsRepository.getWords(params.query)</span>
+    }
+
+<span class="nc" id="L20">    class Params private constructor(val query: String) {</span>
+<span class="nc" id="L21">        companion object {</span>
+
+            fun forWordsRequest(query: String): Params {
+<span class="nc" id="L24">                return Params(query)</span>
+            }
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
