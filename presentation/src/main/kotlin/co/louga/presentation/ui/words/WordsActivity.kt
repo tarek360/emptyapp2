@@ -13,7 +13,7 @@ import org.koin.android.ext.android.inject
 class WordsActivity : AppCompatActivity(), WordsContract.View {
 
   companion object {
-    fun buildIntent(baseContext: Context?, query: String): Intent? {
+    fun buildIntent(baseContext: Context?, query: String): Intent {
 
       val intent = Intent(baseContext, WordsActivity::class.java)
       intent.putExtra(KEY_CATEGORY, query)
@@ -25,7 +25,7 @@ class WordsActivity : AppCompatActivity(), WordsContract.View {
 
   private val presenter: WordsContract.Presenter by inject()
 
-  val adapter: IWordsAdapter by inject()
+  private val adapter: IWordsAdapter by inject()
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)

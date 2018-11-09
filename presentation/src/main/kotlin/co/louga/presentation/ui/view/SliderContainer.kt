@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Point
 import android.os.Build
 import android.os.Build.VERSION_CODES
+import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v4.view.ViewPager.SimpleOnPageChangeListener
 import android.util.AttributeSet
@@ -20,7 +21,7 @@ class SliderContainer
 @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null)
   : FrameLayout(context, attrs), ViewPager.OnPageChangeListener {
 
-  private var adapter: WordsAdapter? = null
+  private var adapter: IWordsAdapter? = null
   private var needsRedraw: Boolean = false
   private var slider: Slider
   private val center = Point()
@@ -43,17 +44,17 @@ class SliderContainer
   }
 
   fun setAdapter(adapter: IWordsAdapter) {
-    this.adapter = adapter as WordsAdapter
+    this.adapter = adapter
   }
 
   fun setData(wordList: Collection<WordViewModel>) {
     this.adapter?.setData(wordList)
-    slider.adapter = adapter
+    slider.adapter = adapter as? PagerAdapter
   }
 
   fun getCurrentItem() = slider.currentItem
 
-  fun getItemsCount() = adapter?.count
+  fun getItemsCount() = adapter?.getData()?.size
 
   override fun onFinishInflate() {
     super.onFinishInflate()

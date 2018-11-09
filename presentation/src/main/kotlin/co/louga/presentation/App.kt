@@ -10,10 +10,10 @@ open class App : MultiDexApplication() {
     override fun onCreate() {
         super.onCreate()
         initComponent()
-        Backend.instance.start(this)
     }
 
-    fun initComponent() {
+    open fun initComponent() {
+        Backend.instance.start(this)
         startKoin(this, allModules)
     }
 }

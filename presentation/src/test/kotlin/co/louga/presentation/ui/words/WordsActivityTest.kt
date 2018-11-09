@@ -1,81 +1,68 @@
 package co.louga.presentation.ui.words
 
-import android.os.Build
 import android.widget.ProgressBar
+import co.louga.presentation.KoinRobolectricBase
 import co.louga.presentation.R
-//import co.louga.presentation.TestRobolectricApplication
-//import co.louga.presentation.di.MockWordsActivityModule
 import co.louga.presentation.model.WordViewModel
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.verify
-import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
+import org.koin.dsl.module.module
+import org.koin.standalone.StandAloneContext.startKoin
 import org.mockito.Mock
 import org.mockito.MockitoAnnotations
-import org.robolectric.Robolectric
-import org.robolectric.RobolectricTestRunner
 import org.robolectric.RuntimeEnvironment
-import org.robolectric.android.controller.ActivityController
-import org.robolectric.annotation.Config
 
-//@Config(application = TestRobolectricApplication::class, sdk = [(Build.VERSION_CODES.LOLLIPOP)])
-@RunWith(RobolectricTestRunner::class)
-class WordsActivityTest {
+class WordsActivityTest : KoinRobolectricBase<WordsActivity>() {
 
-  private lateinit var controller: ActivityController<WordsActivity>
-  private lateinit var activity: WordsActivity
+    @Mock
+    private lateinit var presenter: WordsContract.Presenter
 
-  @Mock
-  private lateinit var presenter: WordsContract.Presenter
+    @Mock
+    private lateinit var adapter: IWordsAdapter
 
-  @Before
-  fun setUp() {
-    MockitoAnnotations.initMocks(this)
+    @Before
+    fun setUp() {
+        MockitoAnnotations.initMocks(this)
+        initKoin()
+        val intent = WordsActivity.buildIntent(RuntimeEnvironment.application.applicationContext, "test")
+        startActivity(WordsActivity::class.java, intent)
+    }
 
-//    val app = RuntimeEnvironment.application as TestRobolectricApplication
-//    app.setWordsActivityModule(MockWordsActivityModule(presenter))
+    private fun initKoin() {
+        val wordsActivityModule = module {
+            factory { presenter }
+            factory { adapter }
+        }
+        val testModules = listOf(wordsActivityModule)
+        startKoin(testModules)
+    }
 
-    val intent = WordsActivity.buildIntent(RuntimeEnvironment.application.applicationContext, "test")
+    @Test
+    fun assertViewsExist() {
+        val loadingView = activity.findViewById<ProgressBar>(R.id.loadingView)
+        assertNotNull("loadingView could not be found", loadingView)
+    }
 
-    controller = Robolectric.buildActivity(WordsActivity::class.java, intent).create()
-        .start()
-        .postCreate(null)
-        .resume()
-        .visible()
+    @Test
+    fun testLoadWords() {
+        verify(presenter).attachView(any())
+        verify(presenter).loadWords(any())
+    }
 
-    activity = controller.get()
-  }
+    @Test
+    fun checkIfDataSetToAdapter() {
+        //Arrange
+        val list = ArrayList<WordViewModel>()
+        list.add(WordViewModel(2, "Name", "desc", "url"))
 
-  @Test
-  fun assertViewsExist() {
-    val loadingView = activity.findViewById<ProgressBar>(R.id.loadingView)
-    assertNotNull("loadingView could not be found", loadingView)
-  }
+        //Act
+        activity.setData(list)
 
-  @Test
-  fun testLoadWords() {
-    verify(presenter).attachView(any())
-    verify(presenter).loadWords(any())
-  }
+        //Assert
+        verify(adapter).setData(list)
+    }
 
-  @Test
-  fun checkIfDataSetToAdapter() {
-    val list = ArrayList<WordViewModel>()
-    list.add(WordViewModel(2, "Name", "desc", "url"))
-    activity.setData(list)
-    assertEquals(1, activity.adapter.getData().size)
-  }
-
-  @After
-  fun tearDown() {
-    // Destroy activity after every test
-    controller
-        .pause()
-        .stop()
-        .destroy()
-  }
 }
